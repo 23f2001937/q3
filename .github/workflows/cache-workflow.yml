@@ -1,0 +1,31 @@
+name: Cache Test Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Prime cache
+      - name: Prime cache cache-f11b270
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/my-dependencies
+          key: cache-f11b270
+        continue-on-error: true
+
+      # Show cache result
+      - name: prime-cache-f11b270
+        run: |
+          if [ -d ~/.cache/my-dependencies ]; then
+            echo "Cache hit"
+          else
+            echo "Cache miss"
+          fi
